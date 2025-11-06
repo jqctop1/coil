@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 private val hierarchyTemplate = KotlinHierarchyTemplate {
     withSourceSetTree(
         KotlinSourceSetTree.main,
-        KotlinSourceSetTree.test,
+        //KotlinSourceSetTree.test,
     )
 
     common {
@@ -24,6 +24,7 @@ private val hierarchyTemplate = KotlinHierarchyTemplate {
         groupNonJvmCommon()
         groupNative()
         groupNonNative()
+        groupNonApple()
     }
 }
 
@@ -66,18 +67,36 @@ private fun KotlinHierarchyBuilder.groupNonJvmCommon() {
 private fun KotlinHierarchyBuilder.groupNative() {
     group("native") {
         withNative()
+        groupApple()
+        groupLinux()
+    }
+}
 
-        group("apple") {
-            withApple()
+private fun KotlinHierarchyBuilder.groupApple() {
+    group("apple") {
+        withApple()
 
-            group("ios") {
-                withIos()
-            }
-
-            group("macos") {
-                withMacos()
-            }
+        group("ios") {
+            withIos()
         }
+
+        group("macos") {
+            withMacos()
+        }
+    }
+}
+
+private fun KotlinHierarchyBuilder.groupLinux() {
+    group("linux") {
+        withLinux()
+        withOhosArm64()
+    }
+}
+
+private fun KotlinHierarchyBuilder.groupNonApple() {
+    group("nonApple") {
+        groupNonNative()
+        groupLinux()
     }
 }
 

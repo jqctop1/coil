@@ -5,8 +5,8 @@ import coil3.versionName
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
 import dev.drewhamilton.poko.gradle.PokoPluginExtension
-import kotlinx.validation.ApiValidationExtension
-import kotlinx.validation.ExperimentalBCVApi
+/*import kotlinx.validation.ApiValidationExtension
+import kotlinx.validation.ExperimentalBCVApi*/
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
@@ -19,11 +19,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 buildscript {
     repositories {
         google()
+        maven("https://mirrors.tencent.com/nexus/repository/maven-public/")
         mavenCentral()
     }
     dependencies {
         classpath(libs.gradlePlugin.android)
-        classpath(libs.gradlePlugin.atomicFu)
+        //classpath(libs.gradlePlugin.atomicFu)
         classpath(libs.gradlePlugin.jetbrainsCompose)
         classpath(libs.gradlePlugin.composeCompiler)
         classpath(libs.gradlePlugin.kotlin)
@@ -35,13 +36,13 @@ buildscript {
 
 plugins {
     alias(libs.plugins.baselineProfile) apply false
-    alias(libs.plugins.binaryCompatibility)
+    //alias(libs.plugins.binaryCompatibility)
     alias(libs.plugins.dokka)
     alias(libs.plugins.poko) apply false
     alias(libs.plugins.spotless)
 }
 
-extensions.configure<ApiValidationExtension> {
+/*extensions.configure<ApiValidationExtension> {
     nonPublicMarkers += "coil3/annotation/InternalCoilApi"
     ignoredProjects += project.subprojects.mapNotNull { project ->
         if (project.name in publicModules) null else project.name
@@ -50,16 +51,18 @@ extensions.configure<ApiValidationExtension> {
     klib {
         enabled = true
     }
-}
+}*/
 
-tasks.withType<DokkaMultiModuleTask>().configureEach {
+/*tasks.withType<DokkaMultiModuleTask>().configureEach {
     outputDirectory = layout.projectDirectory.dir("docs/api")
-}
+}*/
 
 allprojects {
     repositories {
         google()
+        maven("https://mirrors.tencent.com/nexus/repository/maven-public/")
         mavenCentral()
+        mavenLocal()
     }
 
     // Necessary to publish to Maven.

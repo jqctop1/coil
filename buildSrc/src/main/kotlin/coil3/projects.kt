@@ -35,14 +35,14 @@ fun Project.androidLibrary(
         apply(plugin = "com.vanniktech.maven.publish.base")
         setupPublishing {
             val platform = if (project.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-                KotlinMultiplatform(Dokka("dokkaHtml"))
+                KotlinMultiplatform(/*Dokka("dokkaHtml")*/)
             } else {
                 AndroidSingleVariantLibrary()
             }
             configure(platform)
         }
     }
-    testOptions {
+    /*testOptions {
         unitTests.all { test ->
             test.testLogging {
                 exceptionFormat = TestExceptionFormat.FULL
@@ -51,17 +51,18 @@ fun Project.androidLibrary(
                 showCauses = false
             }
         }
-    }
+    }*/
     action()
 }
 
 fun Project.setupPublishing(
     action: MavenPublishBaseExtension.() -> Unit = {},
 ) {
+    apply(rootProject.file("gradle/publish.gradle"))
     extensions.configure<MavenPublishBaseExtension> {
         pomFromGradleProperties()
-        publishToMavenCentral()
-        signAllPublications()
+        //publishToMavenCentral()
+        //signAllPublications()
         action()
 
         coordinates(

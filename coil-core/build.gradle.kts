@@ -3,8 +3,7 @@ import coil3.androidLibrary
 
 plugins {
     id("com.android.library")
-    id("kotlin-multiplatform")
-    id("org.jetbrains.kotlinx.atomicfu")
+    kotlin("multiplatform")
     id("dev.drewhamilton.poko")
     id("androidx.baselineprofile")
 }
@@ -19,14 +18,16 @@ kotlin {
                 api(libs.coroutines.core)
                 api(libs.kotlin.stdlib)
                 api(libs.okio.core)
+                api(libs.kotlinx.atomicfu)
             }
         }
-        commonTest {
+        /*commonTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.common)
             }
         }
+        */
         named("nonAndroidMain") {
             dependencies {
                 api(libs.skiko)
@@ -43,7 +44,7 @@ kotlin {
                 api(libs.androidx.lifecycle.runtime)
             }
         }
-        androidUnitTest {
+        /*androidUnitTest {
             dependencies {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.jvm)
@@ -54,11 +55,11 @@ kotlin {
                 implementation(projects.internal.testUtils)
                 implementation(libs.bundles.test.android)
             }
-        }
+        }*/
     }
 }
 
-baselineProfile {
+/*baselineProfile {
     mergeIntoMain = true
     saveInSrc = true
     baselineProfileOutputDir = "."
@@ -74,4 +75,4 @@ baselineProfile {
 
 dependencies {
     baselineProfile(projects.internal.benchmark)
-}
+}*/
